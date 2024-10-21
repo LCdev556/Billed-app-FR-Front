@@ -2,6 +2,7 @@ import { ROUTES_PATH } from '../constants/routes.js'
 import { formatDate, formatStatus } from "../app/format.js"
 import Logout from "./Logout.js"
 
+console.log("test1")
 export default class {
   constructor({ document, onNavigate, store, localStorage }) {
     this.document = document
@@ -24,23 +25,41 @@ export default class {
     const billUrl = icon.getAttribute("data-bill-url")
     const imgWidth = Math.floor($('#modaleFile').width() * 0.5)
     $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
-    $('#modaleFile').modal('show')
+    if (typeof $('#modaleFile').modal === 'function') $('#modaleFile').modal('show')
   }
+
+  
+  sortBillsByDateAsc = (bills) => {
+    console.log(bills)
+    return bills.sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+  };
+
+
+
+
+
+  
 
   getBills = () => {
     if (this.store) {
+      console.log("Appel à la méthode getBills avec store:", this.store);
       return this.store
       .bills()
       .list()
       .then(snapshot => {
-        const bills = snapshot
-          .map(doc => {
+        const bills = this.sortBillsByDateAsc(snapshot)
+        .map(doc => {
+            console.log(doc)
             try {
+              
               return {
                 ...doc,
                 date: formatDate(doc.date),
                 status: formatStatus(doc.status)
+                
               }
+              
             } catch(e) {
               // if for some reason, corrupted data was introduced, we manage here failing formatDate function
               // log the error and return unformatted date in that case
@@ -52,9 +71,11 @@ export default class {
               }
             }
           })
+          
           console.log('length', bills.length)
         return bills
       })
     }
   }
 }
+

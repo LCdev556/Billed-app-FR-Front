@@ -1,3 +1,4 @@
+
 import { formatDate } from '../app/format.js'
 import DashboardFormUI from '../views/DashboardFormUI.js'
 import BigBilledIcon from '../assets/svg/big_billed.js'
@@ -131,7 +132,11 @@ export default class {
   }
 
   handleShowTickets(e, bills, index) {
-    if (this.counter === undefined || this.index !== index) this.counter = 0
+    //if (this.counter === undefined || this.index !== index) this.counter = 0
+    if (this.index !== index) {
+      this.counter = 0; 
+      this.id = undefined; 
+    }
     if (this.index === undefined || this.index !== index) this.index = index
     if (this.counter % 2 === 0) {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(0deg)'})
@@ -146,6 +151,7 @@ export default class {
     }
 
     bills.forEach(bill => {
+      $(`#open-bill${bill.id}`).off('click') // Supprimer tous les événements précédents
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
 
