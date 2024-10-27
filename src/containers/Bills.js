@@ -30,7 +30,7 @@ export default class {
 
   
   sortBillsByDateAsc = (bills) => {
-    console.log(bills)
+    
     return bills.sort((a, b) => new Date(a.date) - new Date(b.date));
     
   };
@@ -43,7 +43,7 @@ export default class {
 
   getBills = () => {
     if (this.store) {
-      console.log("Appel à la méthode getBills avec store:", this.store);
+      
       return this.store
       .bills()
       .list()
@@ -72,7 +72,7 @@ export default class {
             }
           })
           
-          console.log('length', bills.length)
+          
         return bills
       })
     }

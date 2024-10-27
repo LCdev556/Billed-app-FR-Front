@@ -84,10 +84,17 @@ const mockedBills = {
   },
 }
 
+const mockStore = {
+  bills: jest.fn().mockImplementation(() => mockedBills), // Mock de la fonction bills
+};
+
+export default mockStore;
+
+/**
 export default {
   bills() {
     return mockedBills
     //return {}
   },
 }
-
+ */

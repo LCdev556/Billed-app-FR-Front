@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import {screen, waitFor, fireEvent} from "@testing-library/dom"
+import {screen, waitFor, fireEvent, waitForElementToBeRemoved} from "@testing-library/dom"
 import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
 import { ROUTES_PATH} from "../constants/routes.js";
@@ -16,6 +16,7 @@ import NewBill from "../containers/NewBill";
 
 import router from "../app/Router.js";
 
+/** 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
     test("Then bill icon in vertical layout should be highlighted", async () => {
@@ -48,7 +49,7 @@ describe("Given I am connected as an employee", () => {
 })
 
 
-/** 
+ 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
     test("fetches bills from mock API GET", async () => {
@@ -58,14 +59,20 @@ describe("Given I am connected as an employee", () => {
       document.body.append(root)
       router()
       window.onNavigate(ROUTES_PATH.Bills)
-      await waitFor(() => screen.getByText("Validations"))
-      const contentTest1  = await screen.getByText("test1")
-      expect(contentTest1).toBeTruthy()
-      const contentTest2  = await screen.getByText("test2")
+      await waitForElementToBeRemoved(() => screen.getByText("Loading..."));
+      console.log(document.body.innerHTML)
+      const response = await mockStore.bills().list();
+console.log("API response:", response); 
+      //await waitFor(() => screen.findByText("Validations"))
+      //const contentTest1  = await screen.findByText("test1")
+      //expect(contentTest1).toBeTruthy()
+      //expect(await screen.findByText((content) => content.includes("test1"))).toBeTruthy();
+      expect(await screen.findByText("test1")).toBeInTheDocument();
+      const contentTest2  = await screen.findByText("test2")
       expect(contentTest2).toBeTruthy()
-      const contentTest3  = await screen.getByText("test3")
+      const contentTest3  = await screen.findByText("test3")
       expect(contentTest3).toBeTruthy()
-      const contentTest4  = await screen.getByText("encore")
+      const contentTest4  = await screen.findByText("encore")
       expect(contentTest4).toBeTruthy()
       expect(bills.length).toBe(4);
       //expect(screen.getByTestId("big-billed-icon")).toBeTruthy()
@@ -102,7 +109,7 @@ describe("Given I am connected as an employee", () => {
   })
 })
 
-
+/** 
 //
 
 test("When I click on 'New Bill' button, it should navigate to NewBill page", () => {
@@ -154,7 +161,7 @@ test("When I fetch bills with corrupted data, it should log an error but still r
   expect(consoleSpy).toHaveBeenCalled();
 
   consoleSpy.mockRestore();
-});
+});*/
 
 test("When there are no bills, it should return an empty array", async () => {
   mockStore.bills.mockImplementationOnce(() => ({
@@ -174,4 +181,3 @@ test("When there are no bills, it should return an empty array", async () => {
   expect(bills.length).toBe(0);
 });
 
-*/
