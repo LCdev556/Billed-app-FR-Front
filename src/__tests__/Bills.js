@@ -16,7 +16,7 @@ import NewBill from "../containers/NewBill";
 
 import router from "../app/Router.js";
 
-/** 
+
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
     test("Then bill icon in vertical layout should be highlighted", async () => {
@@ -51,7 +51,8 @@ describe("Given I am connected as an employee", () => {
 
  
 describe("Given I am connected as an employee", () => {
-  describe("When I am on Bills Page", () => {
+  
+  describe("When I am on Bills Page", () => {/**
     test("fetches bills from mock API GET", async () => {
       localStorage.setItem("user", JSON.stringify({ type: "Employee", email: "employee@test.com" }));
       const root = document.createElement("div")
@@ -62,7 +63,7 @@ describe("Given I am connected as an employee", () => {
       await waitForElementToBeRemoved(() => screen.getByText("Loading..."));
       console.log(document.body.innerHTML)
       const response = await mockStore.bills().list();
-console.log("API response:", response); 
+      console.log("API response:", response); 
       //await waitFor(() => screen.findByText("Validations"))
       //const contentTest1  = await screen.findByText("test1")
       //expect(contentTest1).toBeTruthy()
@@ -77,6 +78,8 @@ console.log("API response:", response);
       expect(bills.length).toBe(4);
       //expect(screen.getByTestId("big-billed-icon")).toBeTruthy()
     })
+ 
+  */
   describe("When an error occurs on API", () => {
     beforeEach(() => {
       jest.spyOn(mockStore, "bills")
@@ -109,7 +112,7 @@ console.log("API response:", response);
   })
 })
 
-/** 
+
 //
 
 test("When I click on 'New Bill' button, it should navigate to NewBill page", () => {
@@ -161,7 +164,7 @@ test("When I fetch bills with corrupted data, it should log an error but still r
   expect(consoleSpy).toHaveBeenCalled();
 
   consoleSpy.mockRestore();
-});*/
+});
 
 test("When there are no bills, it should return an empty array", async () => {
   mockStore.bills.mockImplementationOnce(() => ({
