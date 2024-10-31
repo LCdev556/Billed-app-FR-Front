@@ -2,7 +2,6 @@ import { ROUTES_PATH } from '../constants/routes.js'
 import { formatDate, formatStatus } from "../app/format.js"
 import Logout from "./Logout.js"
 
-console.log("test1")
 export default class {
   constructor({ document, onNavigate, store, localStorage }) {
     this.document = document
@@ -29,28 +28,18 @@ export default class {
   }
 
   
-  sortBillsByDateAsc = (bills) => {
-    
-    return bills.sort((a, b) => new Date(a.date) - new Date(b.date));
-    
-  };
-
-
-
-
-
-  
+  sortBillsByDateDesc = (bills) => {
+    return bills.sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
 
   getBills = () => {
     if (this.store) {
-      
       return this.store
       .bills()
       .list()
       .then(snapshot => {
-        const bills = this.sortBillsByDateAsc(snapshot)
+        const bills = this.sortBillsByDateDesc(snapshot)
         .map(doc => {
-            console.log(doc)
             try {
               
               return {
@@ -72,7 +61,10 @@ export default class {
             }
           })
           
+<<<<<<< HEAD
           
+=======
+>>>>>>> a40e86d (peer-programming session : debug earliest to latest bills date test)
         return bills
       })
     }
