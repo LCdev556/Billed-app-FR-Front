@@ -31,7 +31,7 @@ describe("Given I am connected as an employee", () => {
       window.onNavigate(ROUTES_PATH.Bills)
       await waitFor(() => screen.getByTestId('icon-window'))
       const windowIcon = screen.getByTestId('icon-window')
-      //to-do write expect expression
+      
       expect(windowIcon.classList).toContain('active-icon')
 
     })
@@ -57,34 +57,7 @@ describe("Given I am connected as an employee", () => {
  
 describe("Given I am connected as an employee", () => {
   
-  describe("When I am on Bills Page", () => {/**
-    test("fetches bills from mock API GET", async () => {
-      localStorage.setItem("user", JSON.stringify({ type: "Employee", email: "employee@test.com" }));
-      const root = document.createElement("div")
-      root.setAttribute("id", "root")
-      document.body.append(root)
-      router()
-      window.onNavigate(ROUTES_PATH.Bills)
-      await waitForElementToBeRemoved(() => screen.getByText("Loading..."));
-      console.log(document.body.innerHTML)
-      const response = await mockStore.bills().list();
-      console.log("API response:", response); 
-      //await waitFor(() => screen.findByText("Validations"))
-      //const contentTest1  = await screen.findByText("test1")
-      //expect(contentTest1).toBeTruthy()
-      //expect(await screen.findByText((content) => content.includes("test1"))).toBeTruthy();
-      expect(await screen.findByText("test1")).toBeInTheDocument();
-      const contentTest2  = await screen.findByText("test2")
-      expect(contentTest2).toBeTruthy()
-      const contentTest3  = await screen.findByText("test3")
-      expect(contentTest3).toBeTruthy()
-      const contentTest4  = await screen.findByText("encore")
-      expect(contentTest4).toBeTruthy()
-      expect(bills.length).toBe(4);
-      //expect(screen.getByTestId("big-billed-icon")).toBeTruthy()
-    })
- 
-  */
+  describe("When I am on Bills Page", () => {
   describe("When an error occurs on API", () => {
     beforeEach(() => {
       jest.spyOn(mockStore, "bills")
@@ -121,7 +94,7 @@ describe("Given I am connected as an employee", () => {
 //
 
 test("When I click on 'New Bill' button, it should navigate to NewBill page", () => {
-  // Créer un bouton "New Bill"
+  
   const buttonNewBill = document.createElement("button");
   buttonNewBill.setAttribute("data-testid", "btn-new-bill");
   document.body.append(buttonNewBill);
@@ -134,19 +107,18 @@ test("When I click on 'New Bill' button, it should navigate to NewBill page", ()
     localStorage: window.localStorage,
   });
 
-  // Simuler le clic sur le bouton
+  
   buttonNewBill.addEventListener("click", billsInstance.handleClickNewBill);
   buttonNewBill.click();
 
-  // Vérifier que la navigation vers la page NewBill a eu lieu
   expect(onNavigate).toHaveBeenCalledWith(ROUTES_PATH['NewBill']);
 });
 
 
 test("When I fetch bills with corrupted data, it should log an error but still return bills", async () => {
   const corruptedBills = [
-    { date: "invalid-date", status: "accepted" }, // Date invalide
-    { date: "2023-09-12", status: "unknown-status" } // Statut invalide
+    { date: "invalid-date", status: "accepted" }, 
+    { date: "2023-09-12", status: "unknown-status" } 
   ];
 
   mockStore.bills.mockImplementationOnce(() => ({
@@ -164,7 +136,7 @@ test("When I fetch bills with corrupted data, it should log an error but still r
 
   const bills = await billsInstance.getBills();
 
-  // Vérifier que les factures sont récupérées malgré la date corrompue
+  
   expect(bills.length).toBe(2);
   expect(consoleSpy).toHaveBeenCalled();
 
@@ -185,7 +157,6 @@ test("When there are no bills, it should return an empty array", async () => {
 
   const bills = await billsInstance.getBills();
 
-  // Vérifier que le résultat est un tableau vide
   expect(bills.length).toBe(0);
 });
 

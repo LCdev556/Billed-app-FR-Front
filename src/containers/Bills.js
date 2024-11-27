@@ -61,10 +61,7 @@ export default class {
             }
           })
           
-<<<<<<< HEAD
           
-=======
->>>>>>> a40e86d (peer-programming session : debug earliest to latest bills date test)
         return bills
       })
     }
