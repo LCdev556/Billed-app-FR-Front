@@ -29,22 +29,18 @@ describe("Given I am connected as an employee", () => {
     });
 
     test("Then selecting an invalid file should trigger an alert and reset the input", () => {
-      // Mock an invalid file (pdf)
+      
       const file = new File(["document"], "document.pdf", { type: "application/pdf" });
 
-      // Spy on the alert function
       const alertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
 
-      // Get the file input element and simulate a change event
       const inputFile = screen.getByTestId("file");
       fireEvent.change(inputFile, {
         target: { files: [file] },
       });
 
-      // Assert that alert has been called with the correct message
       expect(alertSpy).toHaveBeenCalledWith("Veuillez sélectionner un fichier d'image valide (jpg, jpeg, png)");
 
-      // Assert that the input value has been reset
       expect(inputFile.value).toBe("");
     });
 
@@ -75,19 +71,19 @@ describe("Given I am connected as an employee", () => {
       const form = screen.getByTestId("form-new-bill");
 
       fireEvent.change(screen.getByTestId("expense-type"), { target: { value: "Transports" } });
-      console.log(screen.getByTestId("expense-type").value)
+      
       fireEvent.change(screen.getByTestId("expense-name"), { target: { value: "Train ticket" } });
-      console.log(screen.getByTestId("expense-name").value)
+      
       fireEvent.change(screen.getByTestId("amount"), { target: { value: "100" } });
-      console.log(screen.getByTestId("amount").value)
+      
       fireEvent.change(screen.getByTestId("datepicker"), { target: { value: "2024-10-05" } });
-      console.log(screen.getByTestId("datepicker").value)
+      
       fireEvent.change(screen.getByTestId("vat"), { target: { value: "20" } });
-      console.log(screen.getByTestId("vat").value)
+      
       fireEvent.change(screen.getByTestId("pct"), { target: { value: "20" } });
-      console.log(screen.getByTestId("pct").value)
+      
       fireEvent.change(screen.getByTestId("commentary"), { target: { value: "Business trip" } });
-      console.log(screen.getByTestId("commentary").value)
+      
 
       
       const handleChangeFile = jest.fn((e) => {
@@ -96,7 +92,7 @@ describe("Given I am connected as an employee", () => {
       const inputFile = screen.getByTestId("file");
       inputFile.addEventListener('change', handleChangeFile);
       fireEvent.change(inputFile, { target: mockInputFile });
-      console.log(inputFile.files[0].type)
+      
 
       const handleSubmit = jest.fn((e) => e.preventDefault());
       form.addEventListener("submit", handleSubmit);
@@ -118,19 +114,19 @@ describe("Given I am connected as an employee", () => {
       form.addEventListener("submit", newBill.handleSubmit);
 
       fireEvent.change(screen.getByTestId("expense-type"), { target: { value: "Transports" } });
-      console.log(screen.getByTestId("expense-type").value)
+      
       fireEvent.change(screen.getByTestId("expense-name"), { target: { value: "Train ticket" } });
-      console.log(screen.getByTestId("expense-name").value)
+      
       fireEvent.change(screen.getByTestId("amount"), { target: { value: "100" } });
-      console.log(screen.getByTestId("amount").value)
+      
       fireEvent.change(screen.getByTestId("datepicker"), { target: { value: "2024-10-05" } });
-      console.log(screen.getByTestId("datepicker").value)
+      
       fireEvent.change(screen.getByTestId("vat"), { target: { value: "20" } });
-      console.log(screen.getByTestId("vat").value)
+      
       fireEvent.change(screen.getByTestId("pct"), { target: { value: "20" } });
-      console.log(screen.getByTestId("pct").value)
+      
       fireEvent.change(screen.getByTestId("commentary"), { target: { value: "Business trip" } });
-      console.log(screen.getByTestId("commentary").value)
+     
 
       
       const handleChangeFile = jest.fn((e) => {
@@ -139,8 +135,7 @@ describe("Given I am connected as an employee", () => {
       const inputFile = screen.getByTestId("file");
       inputFile.addEventListener('change', handleChangeFile);
       fireEvent.change(inputFile, { target: mockInputFile });
-      console.log(inputFile.files[0].type)
-
+      
       const handleSubmitSpy = jest.spyOn(newBill,"handleSubmit");
 
       fireEvent.submit(form);
@@ -183,19 +178,16 @@ describe("Given I am connected as an employee", () => {
 
       document.body.innerHTML = NewBillUI();
       newBill = new NewBill({ document, onNavigate, store: mockStore, localStorage: window.localStorage });
-      // Leave some fields empty
+     
       fireEvent.change(screen.getByTestId("amount"), { target: { value: "" } });
 
       fireEvent.change(screen.getByTestId("vat"), { target: { value: "" } });
 
-      // Spy on the updateBill method
-      const updateBillSpy = jest.spyOn(newBill, /**"updateBill"*/"handleSubmit");
+      const updateBillSpy = jest.spyOn(newBill, "handleSubmit");
 
-      // Simulate form submission
       const form = screen.getByTestId("form-new-bill");
       fireEvent.submit(form);
 
-      // Verify that updateBill is not called due to invalid form
       expect(updateBillSpy).not.toHaveBeenCalled();
 
     });
